@@ -11,7 +11,12 @@ func _ready():
 	$UserInterface/Retry.hide()
 
 func _process(delta: float) -> void:
-	# Camera Screen Shake
+	# Suivi fluide du joueur par la caméra (sur le plan X/Z)
+	if is_instance_valid($Player):
+		var target_pos = Vector3($Player.position.x, 0.0, $Player.position.z)
+		$CameraPivot.position = $CameraPivot.position.lerp(target_pos, 5.0 * delta)
+
+	# Tremblement de caméra (Screen Shake)
 	if shake_strength > 0.0:
 		shake_strength = move_toward(shake_strength, 0.0, shake_decay * delta)
 		$CameraPivot/Camera3D.h_offset = randf_range(-shake_strength, shake_strength)
