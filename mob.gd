@@ -23,7 +23,7 @@ func initialize(start_position, player_position):
 		score_value = 2
 		min_speed = 16.0
 		max_speed = 24.0
-		scale = Vector3(0.75, 0.75, 0.75)
+		$Pivot.scale = Vector3(0.8, 0.8, 0.8)
 		
 		# Give sprinter mob a distinctive red-orange body color
 		var sprinter_mat = StandardMaterial3D.new()
@@ -35,6 +35,7 @@ func initialize(start_position, player_position):
 	else:
 		mob_type = MobType.NORMAL
 		score_value = 1
+		$Pivot.scale = Vector3(1.0, 1.0, 1.0)
 
 	# We position the mob by placing it at start_position
 	# and rotate it towards player_position, so it looks at the player.
