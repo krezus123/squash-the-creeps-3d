@@ -322,11 +322,11 @@ Le composant est un `Label3D` avec fondu et élévation gérés par `Tween`.
 ## 8. Bouton Audio Rapide (Mute Direct)
 
 ### Fonctionnalités
-- Bouton accessible `🔊 Son` en haut à droite (ou touche **Échap** / `ui_cancel`).
+- Bouton accessible `Son : ON` en haut à droite (ou touche **Échap** / `ui_cancel`).
 - **Mute / Unmute direct en un clic** : aucune fenêtre pop-up ou menu intrusif pour ne jamais couper l'action du joueur.
 - Mémorise le volume et bascule instantanément :
-  - Son coupé : `MusicPlayer.volume_db = -80.0` et icône `🔇 Son`.
-  - Son réactivé : `MusicPlayer.volume_db = 0.0` et icône `🔊 Son`.
+  - Son coupé : `MusicPlayer.volume_db = -80.0` et texte `Son : OFF`.
+  - Son réactivé : `MusicPlayer.volume_db = 0.0` et texte `Son : ON`.
 
 ```gdscript
 func toggle_mute() -> void:

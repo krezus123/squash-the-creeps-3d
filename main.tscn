@@ -265,7 +265,7 @@ theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
-text = "🔊 Son"
+text = "Son : ON"
 
 [node name="Retry" type="ColorRect" parent="UserInterface" unique_id=1250138165]
 layout_mode = 1

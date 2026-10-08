@@ -113,9 +113,9 @@ func toggle_mute() -> void:
 
 func update_sound_button_display() -> void:
 	if is_muted or MusicPlayer.volume_db <= -70.0:
-		$UserInterface/SettingsButton.text = "🔇 Son"
+		$UserInterface/SettingsButton.text = "Son : OFF"
 	else:
-		$UserInterface/SettingsButton.text = "🔊 Son"
+		$UserInterface/SettingsButton.text = "Son : ON"
 
 func _on_settings_button_pressed() -> void:
 	toggle_mute()
