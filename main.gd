@@ -9,12 +9,13 @@ var shake_decay: float = 14.0
 
 func _ready():
 	$UserInterface/Retry.hide()
+	$CameraPivot.position = Vector3.ZERO
 
 func _process(delta: float) -> void:
-	# Suivi fluide du joueur par la caméra (sur le plan X/Z)
+	# Caméra centrée sur l'arène avec zoom dynamique subtil lors des sauts
 	if is_instance_valid($Player):
-		var target_pos = Vector3($Player.position.x, 0.0, $Player.position.z)
-		$CameraPivot.position = $CameraPivot.position.lerp(target_pos, 5.0 * delta)
+		var target_size = 19.0 + clampf($Player.position.y * 0.18, 0.0, 2.0)
+		$CameraPivot/Camera3D.size = lerpf($CameraPivot/Camera3D.size, target_size, 4.0 * delta)
 
 	# Tremblement de caméra (Screen Shake)
 	if shake_strength > 0.0:
