@@ -48,7 +48,7 @@ func spawn_floating_score(points: int, pos: Vector3) -> void:
 	label.no_depth_test = true
 	label.font_size = 54 if points > 1 else 42
 	label.outline_size = 12
-	label.outline_color = Color(0.1, 0.1, 0.1, 0.9)
+	label.outline_modulate = Color(0.1, 0.1, 0.1, 0.9)
 	
 	if points > 1:
 		label.text = "+%d !" % points
