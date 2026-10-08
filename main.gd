@@ -13,10 +13,6 @@ func _ready():
 	$CameraPivot.position = Vector3.ZERO
 	$UserInterface/SettingsPanel.hide()
 	
-	if is_instance_valid($Player):
-		$Player.frenzy_started.connect(_on_player_frenzy_started)
-		$Player.frenzy_ended.connect(_on_player_frenzy_ended)
-	
 	# Initialiser le slider de son selon le volume actuel de MusicPlayer
 	var current_linear = db_to_linear(MusicPlayer.volume_db)
 	var vol_percent = int(round(current_linear * 100.0))
@@ -29,10 +25,6 @@ func _process(delta: float) -> void:
 	if is_instance_valid($Player):
 		var target_size = 19.0 + clampf($Player.position.y * 0.18, 0.0, 2.0)
 		$CameraPivot/Camera3D.size = lerpf($CameraPivot/Camera3D.size, target_size, 4.0 * delta)
-		
-		# Chronomètre du mode Frenzy sur l'interface
-		if $Player.is_frenzy:
-			$UserInterface/FrenzyBanner.text = "⭐ FRENZY (%.1fs) ⭐" % maxf($Player.frenzy_timer, 0.0)
 
 	# Tremblement de caméra (Screen Shake)
 	if shake_strength > 0.0:
@@ -110,21 +102,8 @@ func _on_mob_timer_timeout():
 func _on_player_hit() -> void:
 	$MobTimer.stop()
 	MusicPlayer.pitch_scale = 1.0
-	$UserInterface/FrenzyBanner.hide()
 	trigger_screen_shake(0.7)
 	$UserInterface/Retry.show()
-
-func _on_player_frenzy_started() -> void:
-	var banner = $UserInterface/FrenzyBanner
-	banner.show()
-	banner.pivot_offset = banner.size / 2.0
-	var tween = create_tween()
-	banner.scale = Vector2(0.6, 0.6)
-	tween.tween_property(banner, "scale", Vector2(1.2, 1.2), 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
-	tween.tween_property(banner, "scale", Vector2(1.0, 1.0), 0.08)
-
-func _on_player_frenzy_ended() -> void:
-	$UserInterface/FrenzyBanner.hide()
 
 # --- GESTION DU MENU DU VOLUME SONORE ---
 func toggle_settings() -> void:

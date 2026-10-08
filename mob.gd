@@ -16,14 +16,15 @@ var is_squashed: bool = false
 func _physics_process(_delta):
 	move_and_slide()
 
-# This function will be called from the Main scene.
 func initialize(start_position, player_position):
-	# ~35% chance to spawn a fast "Sprinter" mob
-	if randf() < 0.35:
+	var sphere_mesh = $Pivot/Character.get_node_or_null("Sphere")
+
+	# ~30% chance to spawn a fast "Sprinter" mob
+	if randf() < 0.30:
 		mob_type = MobType.SPRINTER
 		score_value = 2
-		min_speed = 16.0
-		max_speed = 24.0
+		min_speed = 20.0
+		max_speed = 25.0
 		# Visual scale only, keeping collision box standard to ensure consistent hit detection
 		$Pivot.scale = Vector3(0.85, 0.85, 0.85)
 		
@@ -31,13 +32,16 @@ func initialize(start_position, player_position):
 		var sprinter_mat = StandardMaterial3D.new()
 		sprinter_mat.albedo_color = Color(0.96, 0.22, 0.12)
 		sprinter_mat.roughness = 0.35
-		var sphere_mesh = $Pivot/Character.get_node_or_null("Sphere")
 		if sphere_mesh:
 			sphere_mesh.set_surface_override_material(1, sprinter_mat)
 	else:
 		mob_type = MobType.NORMAL
 		score_value = 1
+		min_speed = 9.0
+		max_speed = 12.0
 		$Pivot.scale = Vector3(1.0, 1.0, 1.0)
+		if sphere_mesh:
+			sphere_mesh.set_surface_override_material(1, null)
 
 	# We position the mob by placing it at start_position
 	# and rotate it towards player_position, so it looks at the player.
@@ -54,7 +58,8 @@ func initialize(start_position, player_position):
 	# in order to move in the direction the mob is looking.
 	velocity = velocity.rotated(Vector3.UP, rotation.y)
 
-	$AnimationPlayer.speed_scale = random_speed / min_speed
+	# L'animation bat des ailes proportionnellement à la vitesse réelle (les sprinters battent 2x plus vite)
+	$AnimationPlayer.speed_scale = random_speed / 10.0
 
 func _on_visible_on_screen_notifier_3d_screen_exited():
 	queue_free()

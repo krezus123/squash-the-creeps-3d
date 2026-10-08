@@ -164,25 +164,6 @@ shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_frenzy"]
-content_margin_left = 18.0
-content_margin_top = 6.0
-content_margin_right = 18.0
-content_margin_bottom = 6.0
-bg_color = Color(1, 0.88, 0.1, 0.95)
-border_width_left = 3
-border_width_top = 3
-border_width_right = 3
-border_width_bottom = 3
-border_color = Color(1, 0.45, 0.05, 1)
-corner_radius_top_left = 14
-corner_radius_top_right = 14
-corner_radius_bottom_right = 14
-corner_radius_bottom_left = 14
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 6
-shadow_offset = Vector2(0, 3)
-
 [node name="Main" type="Node3D" unique_id=1147906672]
 script = ExtResource("1_0xm2m")
 mob_scene = ExtResource("2_h2yge")
@@ -284,24 +265,6 @@ text = "Score : 0"
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_7mycd")
-
-[node name="FrenzyBanner" type="Label" parent="UserInterface" unique_id=751531365]
-visible = false
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -115.0
-offset_top = 16.0
-offset_right = 115.0
-offset_bottom = 58.0
-grow_horizontal = 2
-theme_override_colors/font_color = Color(0.55, 0.18, 0.0, 1)
-theme_override_font_sizes/font_size = 20
-theme_override_styles/normal = SubResource("StyleBoxFlat_frenzy")
-text = "⭐ FRENZY (6.0s) ⭐"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="SettingsButton" type="Button" parent="UserInterface" unique_id=918237465]
 process_mode = 3
