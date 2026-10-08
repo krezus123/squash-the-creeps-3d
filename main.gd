@@ -8,17 +8,13 @@ var shake_strength: float = 0.0
 var shake_decay: float = 14.0
 var next_frenzy_threshold: int = 10
 
+var is_muted: bool = false
+var saved_volume_db: float = 0.0
+
 func _ready():
 	$UserInterface/Retry.hide()
 	$CameraPivot.position = Vector3.ZERO
-	$UserInterface/SettingsPanel.hide()
-	
-	# Initialiser le slider de son selon le volume actuel de MusicPlayer
-	var current_linear = db_to_linear(MusicPlayer.volume_db)
-	var vol_percent = int(round(current_linear * 100.0))
-	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeSlider.value = vol_percent
-	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeValue.text = "%d%%" % vol_percent
-	update_sound_button_icon(vol_percent)
+	update_sound_button_display()
 
 func _process(delta: float) -> void:
 	# Caméra centrée sur l'arène avec zoom dynamique subtil lors des sauts
@@ -105,40 +101,28 @@ func _on_player_hit() -> void:
 	trigger_screen_shake(0.7)
 	$UserInterface/Retry.show()
 
-# --- GESTION DU MENU DU VOLUME SONORE ---
-func toggle_settings() -> void:
-	var panel = $UserInterface/SettingsPanel
-	panel.visible = not panel.visible
-	get_tree().paused = panel.visible
-
-func _on_settings_button_pressed() -> void:
-	toggle_settings()
-
-func _on_close_button_pressed() -> void:
-	toggle_settings()
-
-func _on_volume_slider_value_changed(value: float) -> void:
-	var vol_percent = int(value)
-	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeValue.text = "%d%%" % vol_percent
-
-	var linear_vol = value / 100.0
-	if linear_vol <= 0.01:
+# --- GESTION DU BOUTON DU SON (MUTE DIRECT) ---
+func toggle_mute() -> void:
+	is_muted = not is_muted
+	if is_muted:
+		saved_volume_db = MusicPlayer.volume_db
 		MusicPlayer.volume_db = -80.0
 	else:
-		MusicPlayer.volume_db = linear_to_db(linear_vol)
-	update_sound_button_icon(vol_percent)
+		MusicPlayer.volume_db = saved_volume_db if saved_volume_db > -70.0 else 0.0
+	update_sound_button_display()
 
-func update_sound_button_icon(percent: int) -> void:
-	if percent <= 0:
+func update_sound_button_display() -> void:
+	if is_muted or MusicPlayer.volume_db <= -70.0:
 		$UserInterface/SettingsButton.text = "🔇 Son"
-	elif percent < 50:
-		$UserInterface/SettingsButton.text = "🔉 Son"
 	else:
 		$UserInterface/SettingsButton.text = "🔊 Son"
+
+func _on_settings_button_pressed() -> void:
+	toggle_mute()
 
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $UserInterface/Retry.visible:
 		MusicPlayer.pitch_scale = 1.0
 		get_tree().reload_current_scene()
 	elif event.is_action_pressed("ui_cancel"):
-		toggle_settings()
+		toggle_mute()

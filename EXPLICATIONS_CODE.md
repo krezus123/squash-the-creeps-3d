@@ -13,7 +13,7 @@ Ce document détaille l'intégralité des fonctionnalités ajoutées au jeu, com
 5. [Améliorations Caméra : Cadrage Stable & Screen Shake](#5-améliorations-caméra--cadrage-stable--screen-shake)
 6. [Systèmes de Particules (CPUParticles3D)](#6-systèmes-de-particules-cpuparticles3d)
 7. [Scores Flottants 3D (Combat Text)](#7-scores-flottants-3d-combat-text)
-8. [Menu des Options Audio en Jeu](#8-menu-des-options-audio-en-jeu)
+8. [Bouton Audio Rapide (Mute Direct)](#8-bouton-audio-rapide-mute-direct)
 9. [Direction Artistique & Confinement de l'Arène](#9-direction-artistique--confinement-de-larène)
 
 ---
@@ -319,26 +319,25 @@ Le composant est un `Label3D` avec fondu et élévation gérés par `Tween`.
 
 ---
 
-## 8. Menu des Options Audio en Jeu
+## 8. Bouton Audio Rapide (Mute Direct)
 
 ### Fonctionnalités
-- Bouton accessible `🔊 Son` en haut à droite et raccourci touche **Échap** (`ui_cancel`).
-- Ouverture d'un panneau avec fond sombre semi-transparent.
-- Met le jeu en pause (`get_tree().paused = true`), tout en permettant à l'interface de continuer à fonctionner (`process_mode = PROCESS_MODE_ALWAYS`).
-- Curseur de volume (`HSlider`) avec affichage en pourcentage direct (`100%`, `50%`, etc.).
-- Gestion de l'icône dynamique : `🔊 Son` (>50%), `🔉 Son` (<50%), `🔇 Son` (0%).
+- Bouton accessible `🔊 Son` en haut à droite (ou touche **Échap** / `ui_cancel`).
+- **Mute / Unmute direct en un clic** : aucune fenêtre pop-up ou menu intrusif pour ne jamais couper l'action du joueur.
+- Mémorise le volume et bascule instantanément :
+  - Son coupé : `MusicPlayer.volume_db = -80.0` et icône `🔇 Son`.
+  - Son réactivé : `MusicPlayer.volume_db = 0.0` et icône `🔊 Son`.
 
-### Conversion Logarithmique (Linéaire vers Décibels)
-Le curseur va de 0 à 100 %, mais l'oreille humaine perçoit le volume de manière logarithmique :
 ```gdscript
-func _on_volume_slider_value_changed(value: float) -> void:
-    var linear_vol = value / 100.0
-    if linear_vol <= 0.01:
-        MusicPlayer.volume_db = -80.0 # Silence absolu
+func toggle_mute() -> void:
+    is_muted = not is_muted
+    if is_muted:
+        saved_volume_db = MusicPlayer.volume_db
+        MusicPlayer.volume_db = -80.0
     else:
-        MusicPlayer.volume_db = linear_to_db(linear_vol) # Conversion mathématique précise
+        MusicPlayer.volume_db = saved_volume_db if saved_volume_db > -70.0 else 0.0
+    update_sound_button_display()
 ```
-Cette méthode évite le piège classique où baisser le volume de moitié rendrait le jeu inaudible.
 
 ---
 
