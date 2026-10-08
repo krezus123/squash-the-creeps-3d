@@ -14,6 +14,12 @@ signal hit
 # Maximum jumps allowed before touching ground (2 for Double Jump).
 @export var max_jumps = 2
 
+# Limites pour maintenir le joueur dans le champ de vision de la caméra
+@export var min_x: float = -12.5
+@export var max_x: float = 12.5
+@export var min_z: float = -13.0
+@export var max_z: float = 13.0
+
 var target_velocity = Vector3.ZERO
 var jump_count = 0
 
@@ -90,6 +96,10 @@ func _physics_process(delta):
 	# Moving the Character
 	velocity = target_velocity
 	move_and_slide()
+
+	# Empêcher le joueur de sortir du champ de vision de la caméra
+	position.x = clampf(position.x, min_x, max_x)
+	position.z = clampf(position.z, min_z, max_z)
 
 	$Pivot.rotation.x = PI / 6 * velocity.y / jump_impulse
 
