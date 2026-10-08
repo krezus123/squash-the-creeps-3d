@@ -20,6 +20,30 @@ material = SubResource("StandardMaterial3D_dust")
 radius = 0.2
 height = 0.16
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cone_orange"]
+albedo_color = Color(1, 0.42, 0.05, 1)
+roughness = 0.4
+
+[sub_resource type="BoxMesh" id="BoxMesh_cone_base"]
+material = SubResource("StandardMaterial3D_cone_orange")
+size = Vector3(0.46, 0.04, 0.46)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cone_body"]
+material = SubResource("StandardMaterial3D_cone_orange")
+top_radius = 0.04
+bottom_radius = 0.2
+height = 0.5
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cone_white"]
+albedo_color = Color(1, 1, 1, 1)
+roughness = 0.3
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_cone_stripe"]
+material = SubResource("StandardMaterial3D_cone_white")
+top_radius = 0.12
+bottom_radius = 0.16
+height = 0.13
+
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
 tracks/0/type = "value"
@@ -89,6 +113,20 @@ script = ExtResource("1_onrkg")
 [node name="Pivot" type="Node3D" parent="." unique_id=1864767567]
 
 [node name="Character" parent="Pivot" unique_id=1231331550 instance=ExtResource("1_4flbx")]
+
+[node name="ConeHat" type="Node3D" parent="Pivot/Character" unique_id=581920394]
+transform = Transform3D(0.965926, -0.258819, 0, 0.255018, 0.951745, -0.170685, 0.044177, 0.164868, 0.985325, 0.06, 0.65, 0.06)
+
+[node name="Base" type="MeshInstance3D" parent="Pivot/Character/ConeHat" unique_id=74829103]
+mesh = SubResource("BoxMesh_cone_base")
+
+[node name="Cone" type="MeshInstance3D" parent="Pivot/Character/ConeHat" unique_id=83920194]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("CylinderMesh_cone_body")
+
+[node name="Stripe" type="MeshInstance3D" parent="Pivot/Character/ConeHat" unique_id=92019483]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.23, 0)
+mesh = SubResource("CylinderMesh_cone_stripe")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=1639635692]
 transform = Transform3D(0.8, -2.4760243e-07, 6.706035e-08, 2.4760246e-07, 0.8, -5.8850986e-08, -6.7060334e-08, 5.8850983e-08, 0.8, 0, 0, 0)

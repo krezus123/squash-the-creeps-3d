@@ -73,6 +73,9 @@ func _physics_process(delta):
 			tween.tween_property($Pivot, "scale", Vector3(0.85, 1.25, 0.85), 0.08)
 			tween.tween_property($Pivot, "scale", Vector3(1.0, 1.0, 1.0), 0.1)
 
+			animate_hat_bounce()
+			spawn_boing_text()
+
 	# Iterate through all collisions that occurred this frame
 	for index in range(get_slide_collision_count()):
 		var collision = get_slide_collision(index)
@@ -111,3 +114,34 @@ func _on_mob_detector_body_entered(body):
 	if body.is_in_group("mob") and body.get("is_squashed") == true:
 		return
 	die()
+
+func animate_hat_bounce() -> void:
+	var hat = get_node_or_null("Pivot/Character/ConeHat")
+	if hat:
+		var hat_tween = create_tween()
+		hat_tween.tween_property(hat, "position:y", 0.95, 0.09).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+		hat_tween.tween_property(hat, "position:y", 0.65, 0.12).set_trans(Tween.TRANS_BOUNCE).set_ease(Tween.EASE_OUT)
+
+func spawn_boing_text() -> void:
+	var label = Label3D.new()
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.no_depth_test = true
+	label.text = "BOING !"
+	label.font_size = 52
+	label.outline_size = 12
+	label.outline_modulate = Color(0.1, 0.1, 0.1, 0.9)
+	label.modulate = Color(1.0, 0.86, 0.15, 1.0) # Jaune vif cartoon
+	label.position = global_position + Vector3(0, 1.6, 0)
+
+	if get_parent():
+		get_parent().add_child(label)
+	else:
+		add_child(label)
+
+	var tween = create_tween()
+	label.scale = Vector3(0.5, 0.5, 0.5)
+	tween.tween_property(label, "scale", Vector3(1.25, 1.25, 1.25), 0.08)
+	tween.tween_property(label, "scale", Vector3(1.0, 1.0, 1.0), 0.06)
+	tween.parallel().tween_property(label, "position:y", label.position.y + 1.5, 0.55).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.55).set_delay(0.2)
+	tween.tween_callback(label.queue_free)
