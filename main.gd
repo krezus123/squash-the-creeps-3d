@@ -42,10 +42,34 @@ func spawn_squash_particles(pos: Vector3) -> void:
 	particles.position = pos + Vector3(0, 0.5, 0)
 	add_child(particles)
 
+func spawn_floating_score(points: int, pos: Vector3) -> void:
+	var label = Label3D.new()
+	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
+	label.no_depth_test = true
+	label.font_size = 54 if points > 1 else 42
+	label.outline_size = 12
+	label.outline_color = Color(0.1, 0.1, 0.1, 0.9)
+	
+	if points > 1:
+		label.text = "+%d !" % points
+		label.modulate = Color(1.0, 0.28, 0.18, 1.0) # Rouge vif pour les sprinters
+	else:
+		label.text = "+%d" % points
+		label.modulate = Color(1.0, 0.88, 0.2, 1.0) # Jaune doré pour les mobs normaux
+		
+	label.position = pos + Vector3(0, 1.2, 0)
+	add_child(label)
+	
+	var tween = create_tween()
+	tween.tween_property(label, "position:y", label.position.y + 1.8, 0.65).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
+	tween.parallel().tween_property(label, "modulate:a", 0.0, 0.65).set_delay(0.2)
+	tween.tween_callback(label.queue_free)
+
 func _on_mob_squashed(points: int, death_position: Vector3) -> void:
 	$UserInterface/ScoreLabel._on_mob_squashed(points)
-	trigger_screen_shake(0.35)
+	trigger_screen_shake(0.4 if points > 1 else 0.3)
 	spawn_squash_particles(death_position)
+	spawn_floating_score(points, death_position)
 
 func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()
