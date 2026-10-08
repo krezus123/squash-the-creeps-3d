@@ -6,6 +6,25 @@
 [ext_resource type="FontFile" uid="uid://cyxhh7ddkn62q" path="res://fonts/Montserrat-Medium.ttf" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="5_7mycd"]
 
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_world"]
+sky_top_color = Color(0.2, 0.6, 0.98, 1)
+sky_horizon_color = Color(0.76, 0.9, 1, 1)
+ground_bottom_color = Color(0.32, 0.76, 0.42, 1)
+ground_horizon_color = Color(0.76, 0.9, 1, 1)
+
+[sub_resource type="Sky" id="Sky_world"]
+sky_material = SubResource("ProceduralSkyMaterial_world")
+
+[sub_resource type="Environment" id="Environment_world"]
+background_mode = 2
+sky = SubResource("Sky_world")
+ambient_light_source = 3
+reflected_light_source = 2
+tonemap_mode = 2
+tonemap_exposure = 1.05
+glow_enabled = true
+glow_intensity = 0.35
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_qg4ar"]
 size = Vector3(60, 2, 60)
 
@@ -17,7 +36,6 @@ roughness = 0.8
 size = Vector3(60, 2, 60)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_border"]
-albedo_color = Color(1, 1, 1, 1)
 roughness = 0.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_border"]
@@ -47,25 +65,6 @@ _data = {
 }
 point_count = 4
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_world"]
-sky_top_color = Color(0.2, 0.6, 0.98, 1)
-sky_horizon_color = Color(0.76, 0.9, 1, 1)
-ground_bottom_color = Color(0.32, 0.76, 0.42, 1)
-ground_horizon_color = Color(0.76, 0.9, 1, 1)
-
-[sub_resource type="Sky" id="Sky_world"]
-sky_material = SubResource("ProceduralSkyMaterial_world")
-
-[sub_resource type="Environment" id="Environment_world"]
-background_mode = 2
-sky = SubResource("Sky_world")
-ambient_light_source = 3
-reflected_light_source = 2
-tonemap_mode = 2
-tonemap_exposure = 1.05
-glow_enabled = true
-glow_intensity = 0.35
-
 [sub_resource type="Theme" id="Theme_kgsej"]
 default_font = ExtResource("4_lquwl")
 default_font_size = 22
@@ -88,25 +87,6 @@ corner_radius_bottom_left = 14
 shadow_color = Color(0, 0, 0, 0.18)
 shadow_size = 5
 shadow_offset = Vector2(0, 3)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retry"]
-content_margin_left = 32.0
-content_margin_top = 24.0
-content_margin_right = 32.0
-content_margin_bottom = 24.0
-bg_color = Color(1, 1, 1, 0.96)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.95, 0.25, 0.2, 1)
-corner_radius_top_left = 18
-corner_radius_top_right = 18
-corner_radius_bottom_right = 18
-corner_radius_bottom_left = 18
-shadow_color = Color(0, 0, 0, 0.25)
-shadow_size = 8
-shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
 content_margin_left = 14.0
@@ -145,6 +125,25 @@ corner_radius_bottom_left = 14
 shadow_color = Color(0, 0, 0, 0.2)
 shadow_size = 5
 shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_retry"]
+content_margin_left = 32.0
+content_margin_top = 24.0
+content_margin_right = 32.0
+content_margin_bottom = 24.0
+bg_color = Color(1, 1, 1, 0.96)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(0.95, 0.25, 0.2, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_settings_card"]
 content_margin_left = 28.0
@@ -239,7 +238,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ig7tw")
 curve = SubResource("Curve3D_h2yge")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath" unique_id=1090241602]
-transform = Transform3D(0.005221767, 0, -0.99998456, 0, 1, 0, 0.99998456, 0, 0.005221767, -18.08834, 0, -16.905937)
+transform = Transform3D(0.0052217664, 0, -0.9999845, 0, 1, 0, 0.9999845, 0, 0.0052217664, -18.08834, 0, -16.905937)
 
 [node name="MobTimer" type="Timer" parent="." unique_id=677540174]
 wait_time = 0.5
@@ -280,11 +279,11 @@ offset_bottom = 58.0
 grow_horizontal = 0
 focus_mode = 0
 theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
-theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
 theme_override_colors/font_pressed_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "🔊 Son"
 
 [node name="Retry" type="ColorRect" parent="UserInterface" unique_id=1250138165]
@@ -383,9 +382,6 @@ layout_mode = 2
 size_flags_horizontal = 3
 size_flags_vertical = 4
 focus_mode = 0
-min_value = 0.0
-max_value = 100.0
-step = 1.0
 value = 100.0
 
 [node name="VolumeValue" type="Label" parent="UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow" unique_id=987654320]
@@ -400,11 +396,11 @@ layout_mode = 2
 size_flags_horizontal = 4
 focus_mode = 0
 theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
-theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
 theme_override_colors/font_pressed_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
 theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
-theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
 text = "Fermer"
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
