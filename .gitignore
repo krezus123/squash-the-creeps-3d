@@ -1,0 +1,9 @@
+# Godot 4+ cache and imported files
+.godot/
+
+# Godot-specific
+*.translation
+
+# OS files
+.DS_Store
+Thumbs.db
