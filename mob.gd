@@ -11,6 +11,7 @@ signal squashed(points: int, death_position: Vector3)
 enum MobType { NORMAL, SPRINTER }
 var mob_type: MobType = MobType.NORMAL
 var score_value: int = 1
+var is_squashed: bool = false
 
 func _physics_process(_delta):
 	move_and_slide()
@@ -23,7 +24,8 @@ func initialize(start_position, player_position):
 		score_value = 2
 		min_speed = 16.0
 		max_speed = 24.0
-		$Pivot.scale = Vector3(0.8, 0.8, 0.8)
+		# Visual scale only, keeping collision box standard to ensure consistent hit detection
+		$Pivot.scale = Vector3(0.85, 0.85, 0.85)
 		
 		# Give sprinter mob a distinctive red-orange body color
 		var sprinter_mat = StandardMaterial3D.new()
@@ -58,13 +60,9 @@ func _on_visible_on_screen_notifier_3d_screen_exited():
 	queue_free()
 
 func squash():
+	if is_squashed:
+		return
+	is_squashed = true
 	var death_pos = global_position if is_inside_tree() else position
 	squashed.emit(score_value, death_pos)
-	collision_layer = 0
-	$CollisionShape3D.set_deferred("disabled", true)
-	set_physics_process(false)
-	
-	# Squish animation before removal
-	var tween = create_tween()
-	tween.tween_property($Pivot, "scale", Vector3(1.4, 0.15, 1.4), 0.1).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
-	tween.tween_callback(queue_free)
+	queue_free()

@@ -78,16 +78,14 @@ func _physics_process(delta):
 		# If the collider is with a mob
 		if collision.get_collider().is_in_group("mob"):
 			var mob = collision.get_collider()
-			# We can only squash a mob if airborne, falling down, and hitting from above
-			if not is_on_floor() and target_velocity.y < 0.0 and Vector3.UP.dot(collision.get_normal()) > 0.3:
+			if mob.get("is_squashed") == true:
+				continue
+			# Check that we are hitting it from above
+			if Vector3.UP.dot(collision.get_normal()) > 0.1:
 				mob.squash()
 				target_velocity.y = bounce_impulse
 				jump_count = 0 # Can jump again after stomping a mob!
 				break
-			else:
-				# Collision on the floor or from the side kills the player
-				die()
-				return
 
 	# Moving the Character
 	velocity = target_velocity
@@ -99,5 +97,7 @@ func die():
 	hit.emit()
 	queue_free()
 
-func _on_mob_detector_body_entered(_body):
+func _on_mob_detector_body_entered(body):
+	if body.is_in_group("mob") and body.get("is_squashed") == true:
+		return
 	die()
