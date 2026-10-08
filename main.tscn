@@ -108,6 +108,63 @@ shadow_color = Color(0, 0, 0, 0.25)
 shadow_size = 8
 shadow_offset = Vector2(0, 4)
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_normal"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 0.95)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.82, 0.12, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.15)
+shadow_size = 4
+shadow_offset = Vector2(0, 2)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_btn_hover"]
+content_margin_left = 14.0
+content_margin_top = 8.0
+content_margin_right = 14.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 0.96, 0.85, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+border_color = Color(1, 0.72, 0.05, 1)
+corner_radius_top_left = 14
+corner_radius_top_right = 14
+corner_radius_bottom_right = 14
+corner_radius_bottom_left = 14
+shadow_color = Color(0, 0, 0, 0.2)
+shadow_size = 5
+shadow_offset = Vector2(0, 3)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_settings_card"]
+content_margin_left = 28.0
+content_margin_top = 22.0
+content_margin_right = 28.0
+content_margin_bottom = 22.0
+bg_color = Color(1, 1, 1, 0.98)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+border_color = Color(1, 0.82, 0.12, 1)
+corner_radius_top_left = 18
+corner_radius_top_right = 18
+corner_radius_bottom_right = 18
+corner_radius_bottom_left = 18
+shadow_color = Color(0, 0, 0, 0.25)
+shadow_size = 8
+shadow_offset = Vector2(0, 4)
+
 [node name="Main" type="Node3D" unique_id=1147906672]
 script = ExtResource("1_0xm2m")
 mob_scene = ExtResource("2_h2yge")
@@ -210,6 +267,26 @@ horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_7mycd")
 
+[node name="SettingsButton" type="Button" parent="UserInterface" unique_id=918237465]
+process_mode = 3
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -118.0
+offset_top = 16.0
+offset_right = -18.0
+offset_bottom = 58.0
+grow_horizontal = 0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+text = "🔊 Son"
+
 [node name="Retry" type="ColorRect" parent="UserInterface" unique_id=1250138165]
 layout_mode = 1
 anchors_preset = 15
@@ -253,5 +330,85 @@ theme_override_font_sizes/font_size = 18
 text = "Appuyez sur Entrée pour rejouer"
 horizontal_alignment = 1
 
+[node name="SettingsPanel" type="ColorRect" parent="UserInterface" unique_id=765432198]
+process_mode = 3
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.08, 0.12, 0.2, 0.45)
+
+[node name="Panel" type="PanelContainer" parent="UserInterface/SettingsPanel" unique_id=654321987]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -170.0
+offset_top = -95.0
+offset_right = 170.0
+offset_bottom = 95.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_settings_card")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterface/SettingsPanel/Panel" unique_id=543219876]
+layout_mode = 2
+theme_override_constants/separation = 12
+alignment = 1
+
+[node name="Title" type="Label" parent="UserInterface/SettingsPanel/Panel/VBoxContainer" unique_id=432198765]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_font_sizes/font_size = 22
+text = "VOLUME DU SON"
+horizontal_alignment = 1
+
+[node name="VolumeRow" type="HBoxContainer" parent="UserInterface/SettingsPanel/Panel/VBoxContainer" unique_id=321987654]
+layout_mode = 2
+theme_override_constants/separation = 10
+alignment = 1
+
+[node name="Icon" type="Label" parent="UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow" unique_id=219876543]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
+text = "🎵"
+
+[node name="VolumeSlider" type="HSlider" parent="UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow" unique_id=198765432]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+focus_mode = 0
+min_value = 0.0
+max_value = 100.0
+step = 1.0
+value = 100.0
+
+[node name="VolumeValue" type="Label" parent="UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow" unique_id=987654320]
+custom_minimum_size = Vector2(50, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
+text = "100%"
+horizontal_alignment = 2
+
+[node name="CloseButton" type="Button" parent="UserInterface/SettingsPanel/Panel/VBoxContainer" unique_id=876543210]
+layout_mode = 2
+size_flags_horizontal = 4
+focus_mode = 0
+theme_override_colors/font_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_hover_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_colors/font_pressed_color = Color(0.12, 0.16, 0.28, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_btn_normal")
+theme_override_styles/hover = SubResource("StyleBoxFlat_btn_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_btn_hover")
+text = "Fermer"
+
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
+[connection signal="pressed" from="UserInterface/SettingsButton" to="." method="_on_settings_button_pressed"]
+[connection signal="value_changed" from="UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeSlider" to="." method="_on_volume_slider_value_changed"]
+[connection signal="pressed" from="UserInterface/SettingsPanel/Panel/VBoxContainer/CloseButton" to="." method="_on_close_button_pressed"]

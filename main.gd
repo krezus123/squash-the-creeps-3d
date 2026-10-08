@@ -10,6 +10,14 @@ var shake_decay: float = 14.0
 func _ready():
 	$UserInterface/Retry.hide()
 	$CameraPivot.position = Vector3.ZERO
+	$UserInterface/SettingsPanel.hide()
+	
+	# Initialiser le slider de son selon le volume actuel de MusicPlayer
+	var current_linear = db_to_linear(MusicPlayer.volume_db)
+	var vol_percent = int(round(current_linear * 100.0))
+	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeSlider.value = vol_percent
+	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeValue.text = "%d%%" % vol_percent
+	update_sound_button_icon(vol_percent)
 
 func _process(delta: float) -> void:
 	# Caméra centrée sur l'arène avec zoom dynamique subtil lors des sauts
@@ -56,7 +64,40 @@ func _on_player_hit() -> void:
 	$MobTimer.stop()
 	trigger_screen_shake(0.7)
 	$UserInterface/Retry.show()
+
+# --- GESTION DU MENU DU VOLUME SONORE ---
+func toggle_settings() -> void:
+	var panel = $UserInterface/SettingsPanel
+	panel.visible = not panel.visible
+	get_tree().paused = panel.visible
+
+func _on_settings_button_pressed() -> void:
+	toggle_settings()
+
+func _on_close_button_pressed() -> void:
+	toggle_settings()
+
+func _on_volume_slider_value_changed(value: float) -> void:
+	var vol_percent = int(value)
+	$UserInterface/SettingsPanel/Panel/VBoxContainer/VolumeRow/VolumeValue.text = "%d%%" % vol_percent
 	
+	var linear_vol = value / 100.0
+	if linear_vol <= 0.01:
+		MusicPlayer.volume_db = -80.0
+	else:
+		MusicPlayer.volume_db = linear_to_db(linear_vol)
+	update_sound_button_icon(vol_percent)
+
+func update_sound_button_icon(percent: int) -> void:
+	if percent <= 0:
+		$UserInterface/SettingsButton.text = "🔇 Son"
+	elif percent < 50:
+		$UserInterface/SettingsButton.text = "🔉 Son"
+	else:
+		$UserInterface/SettingsButton.text = "🔊 Son"
+
 func _unhandled_input(event):
 	if event.is_action_pressed("ui_accept") and $UserInterface/Retry.visible:
 		get_tree().reload_current_scene()
+	elif event.is_action_pressed("ui_cancel"):
+		toggle_settings()
