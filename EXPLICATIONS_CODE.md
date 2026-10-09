@@ -344,11 +344,11 @@ func toggle_mute() -> void:
 ## 9. Direction Artistique, Shader Mer & Confinement de l'Arène
 
 1. **Sol en Mer Cartoon Animée (`water.gdshader`) :**
-   - Le sol central utilise un shader procédural léger de 15 lignes sans aucune image externe.
-   - Les vagues se déplacent en temps réel grâce aux fonctions sinusoïdales et à la variable `TIME`.
-   - Mélange fluide entre deux bleus d'eau (bleu lagon et bleu profond) avec crêtes d'écume blanche (`smoothstep`).
-   - Faible rugosité (`ROUGHNESS = 0.12`) pour donner un reflet brillant et mouillé sous la lumière du soleil.
-   - Le sol extérieur et le ciel sont harmonisés en bleu océan.
+   - Le sol central utilise un shader de caustiques procédurales inspiré du style *Zelda: Wind Waker*.
+   - Il calcule un réseau d'alvéoles cellulaires (*Voronoi*) qui s'entrecroisent et ondulent en continu avec la variable `TIME`.
+   - Les filets d'eau et crêtes d'écume blanche se découpent nettement sur un dégradé bleu marine et turquoise.
+   - Faible rugosité (`ROUGHNESS = 0.1`) et spécularité vive (`SPECULAR = 0.7`) pour créer les reflets brillants caractéristiques d'une surface aquatique.
+   - 100 % procédural par code mathématique, sans aucune image externe requise.
 
 2. **Confinement du Joueur (`clampf`) :**
    Pour éviter que le joueur ne sorte de la vue de la caméra fixe :
