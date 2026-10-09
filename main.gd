@@ -2,8 +2,6 @@ extends Node3D
 
 @export var mob_scene: PackedScene
 
-const SquashParticlesScene = preload("res://squash_particles.tscn")
-
 var shake_strength: float = 0.0
 var shake_decay: float = 14.0
 var next_frenzy_threshold: int = 10
@@ -31,11 +29,6 @@ func _process(delta: float) -> void:
 
 func trigger_screen_shake(amount: float = 0.35) -> void:
 	shake_strength = amount
-
-func spawn_squash_particles(pos: Vector3) -> void:
-	var particles = SquashParticlesScene.instantiate()
-	particles.position = pos + Vector3(0, 0.5, 0)
-	add_child(particles)
 
 func spawn_floating_score(points: int, pos: Vector3) -> void:
 	var label = Label3D.new()
@@ -72,7 +65,6 @@ func _on_mob_squashed(points: int, death_position: Vector3) -> void:
 
 	$UserInterface/ScoreLabel._on_mob_squashed(final_points)
 	trigger_screen_shake(0.45 if final_points > 1 else 0.3)
-	spawn_squash_particles(death_position)
 	spawn_floating_score(final_points, death_position)
 
 	if $UserInterface/ScoreLabel.score >= next_frenzy_threshold:

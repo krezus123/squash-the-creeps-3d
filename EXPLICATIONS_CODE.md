@@ -290,21 +290,13 @@ func _process(delta: float) -> void:
 
 ---
 
-## 6. Systèmes de Particules (CPUParticles3D)
+## 6. Système de Particules (CPUParticles3D)
 
-Trois émetteurs de particules légers apportent de la vie au monde :
+L'émetteur de particules est concentré sur les moments forts :
 
-1. **La traînée de poussière (`DustTrail` dans `player.tscn`) :**
-   - Émet des petites sphères blanches semi-transparentes sous les pieds.
-   - Activée uniquement par code quand le joueur court au sol :
-     ```gdscript
-     $DustTrail.emitting = is_on_floor() and direction != Vector3.ZERO
-     ```
-2. **L'impact d'écrasement (`SquashParticles` dans `squash_particles.tscn`) :**
-   - 18 étincelles dorées explosives projetées vers le haut (`one_shot = true`, `explosiveness = 1.0`).
-   - S'auto-détruit après sa durée de vie grâce à son script dédié.
-3. **L'aura Frenzy (`FrenzyParticles` dans `player.tscn`) :**
-   - Émission continue de particules sphériques dorées scintillantes (`Color(1, 0.9, 0.15)`) tout autour du joueur quand le mode invincible est actif.
+1. **L'aura Frenzy (`FrenzyParticles` dans `player.tscn`) :**
+   - Émission de particules sphériques dorées scintillantes (`Color(1, 0.9, 0.15)`) tout autour du joueur quand le mode invincible est actif.
+   - S'active uniquement lors de l'état invincible pour marquer la puissance du joueur sans encombrer la lisibilité du reste du jeu.
 
 ---
 

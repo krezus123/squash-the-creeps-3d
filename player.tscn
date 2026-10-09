@@ -95,16 +95,6 @@ _data = {
 &"float": SubResource("Animation_i3pqv")
 }
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dust"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(1, 1, 1, 0.55)
-
-[sub_resource type="SphereMesh" id="SphereMesh_dust"]
-material = SubResource("StandardMaterial3D_dust")
-radius = 0.2
-height = 0.16
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frenzy_spark"]
 shading_mode = 0
 albedo_color = Color(1, 0.9, 0.15, 1)
@@ -152,19 +142,6 @@ shape = SubResource("CylinderShape3D_qg4ar")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1650617282]
 libraries/ = SubResource("AnimationLibrary_hqtel")
 autoplay = &"float"
-
-[node name="DustTrail" type="CPUParticles3D" parent="." unique_id=987654321]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
-emitting = false
-lifetime = 0.35
-mesh = SubResource("SphereMesh_dust")
-direction = Vector3(0, 1, 0)
-spread = 60.0
-gravity = Vector3(0, 1.2, 0)
-initial_velocity_min = 1.0
-initial_velocity_max = 2.5
-scale_amount_min = 0.6
-scale_amount_max = 1.1
 
 [node name="FrenzyParticles" type="CPUParticles3D" parent="." unique_id=987654322]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)

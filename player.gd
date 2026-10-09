@@ -69,9 +69,6 @@ func _physics_process(delta):
 	else:
 		$AnimationPlayer.speed_scale = 1
 
-	if has_node("DustTrail"):
-		$DustTrail.emitting = is_on_floor() and direction != Vector3.ZERO
-
 	target_velocity.x = direction.x * speed
 	target_velocity.z = direction.z * speed
 
