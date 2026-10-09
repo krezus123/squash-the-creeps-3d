@@ -3,32 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://d0ypm0v45pwdv" path="res://art/player.glb" id="1_4flbx"]
 [ext_resource type="Script" uid="uid://cnd3r3qyfy5so" path="res://player.gd" id="1_onrkg"]
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_qg4ar"]
-radius = 1.0
-
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_qg4ar"]
-height = 0.698
-radius = 1.4082031
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dust"]
-transparency = 1
-shading_mode = 0
-albedo_color = Color(1, 1, 1, 0.55)
-
-[sub_resource type="SphereMesh" id="SphereMesh_dust"]
-material = SubResource("StandardMaterial3D_dust")
-radius = 0.2
-height = 0.16
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frenzy_spark"]
-shading_mode = 0
-albedo_color = Color(1, 0.9, 0.15, 1)
-
-[sub_resource type="SphereMesh" id="SphereMesh_frenzy_spark"]
-material = SubResource("StandardMaterial3D_frenzy_spark")
-radius = 0.14
-height = 0.14
-
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cone_orange"]
 albedo_color = Color(1, 0.42, 0.05, 1)
 roughness = 0.4
@@ -44,7 +18,6 @@ bottom_radius = 0.2
 height = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cone_white"]
-albedo_color = Color(1, 1, 1, 1)
 roughness = 0.3
 
 [sub_resource type="CylinderMesh" id="CylinderMesh_cone_stripe"]
@@ -52,6 +25,13 @@ material = SubResource("StandardMaterial3D_cone_white")
 top_radius = 0.12
 bottom_radius = 0.16
 height = 0.13
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_qg4ar"]
+radius = 1.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_qg4ar"]
+height = 0.698
+radius = 1.4082031
 
 [sub_resource type="Animation" id="Animation_onrkg"]
 length = 0.001
@@ -115,6 +95,25 @@ _data = {
 &"float": SubResource("Animation_i3pqv")
 }
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_dust"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 1, 1, 0.55)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dust"]
+material = SubResource("StandardMaterial3D_dust")
+radius = 0.2
+height = 0.16
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_frenzy_spark"]
+shading_mode = 0
+albedo_color = Color(1, 0.9, 0.15, 1)
+
+[sub_resource type="SphereMesh" id="SphereMesh_frenzy_spark"]
+material = SubResource("StandardMaterial3D_frenzy_spark")
+radius = 0.14
+height = 0.14
+
 [node name="Player" type="CharacterBody3D" unique_id=13165575]
 collision_mask = 6
 script = ExtResource("1_onrkg")
@@ -157,7 +156,6 @@ autoplay = &"float"
 [node name="DustTrail" type="CPUParticles3D" parent="." unique_id=987654321]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.3, 0)
 emitting = false
-amount = 8
 lifetime = 0.35
 mesh = SubResource("SphereMesh_dust")
 direction = Vector3(0, 1, 0)

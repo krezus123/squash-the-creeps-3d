@@ -116,7 +116,7 @@ func _physics_process(delta):
 				jump_count = 0
 				air_stomp_streak += 1
 				if air_stomp_streak >= 3:
-					start_frenzy(6.0)
+					start_frenzy(3.0)
 					air_stomp_streak = 0
 				break
 

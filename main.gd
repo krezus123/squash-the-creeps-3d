@@ -78,7 +78,7 @@ func _on_mob_squashed(points: int, death_position: Vector3) -> void:
 	if $UserInterface/ScoreLabel.score >= next_frenzy_threshold:
 		next_frenzy_threshold += 10
 		if is_instance_valid($Player):
-			$Player.start_frenzy(6.0)
+			$Player.start_frenzy(4.0)
 
 func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()

@@ -5,11 +5,12 @@
 [ext_resource type="PackedScene" uid="uid://defdm2qdva75q" path="res://mob.tscn" id="2_h2yge"]
 [ext_resource type="FontFile" uid="uid://cyxhh7ddkn62q" path="res://fonts/Montserrat-Medium.ttf" id="4_lquwl"]
 [ext_resource type="Script" uid="uid://bq4lq2wbf1rkc" path="res://score_label.gd" id="5_7mycd"]
+[ext_resource type="Shader" path="res://water.gdshader" id="6_water"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_world"]
 sky_top_color = Color(0.2, 0.6, 0.98, 1)
 sky_horizon_color = Color(0.76, 0.9, 1, 1)
-ground_bottom_color = Color(0.32, 0.76, 0.42, 1)
+ground_bottom_color = Color(0.12, 0.42, 0.72, 1)
 ground_horizon_color = Color(0.76, 0.9, 1, 1)
 
 [sub_resource type="Sky" id="Sky_world"]
@@ -25,12 +26,16 @@ tonemap_exposure = 1.05
 glow_enabled = true
 glow_intensity = 0.35
 
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_water"]
+render_priority = 0
+shader = ExtResource("6_water")
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_qg4ar"]
 size = Vector3(60, 2, 60)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ground_outer"]
-albedo_color = Color(0.24, 0.6, 0.85, 1)
-roughness = 0.8
+albedo_color = Color(0.10, 0.38, 0.68, 1)
+roughness = 0.5
 
 [sub_resource type="BoxMesh" id="BoxMesh_qg4ar"]
 size = Vector3(60, 2, 60)
@@ -156,7 +161,7 @@ mesh = SubResource("BoxMesh_border")
 
 [node name="Playfield" type="MeshInstance3D" parent="Ground" unique_id=98124762]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.65, 1.05, 0.5)
-material_override = SubResource("StandardMaterial3D_playfield")
+material_override = SubResource("ShaderMaterial_water")
 mesh = SubResource("BoxMesh_playfield")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=1360176644]
@@ -204,7 +209,7 @@ surface_material_override/0 = SubResource("StandardMaterial3D_ig7tw")
 curve = SubResource("Curve3D_h2yge")
 
 [node name="SpawnLocation" type="PathFollow3D" parent="SpawnPath" unique_id=1090241602]
-transform = Transform3D(0.0052217664, 0, -0.9999845, 0, 1, 0, 0.9999845, 0, 0.0052217664, -18.08834, 0, -16.905937)
+transform = Transform3D(0.0052217655, 0, -0.9999843, 0, 1, 0, 0.9999843, 0, 0.0052217655, -18.08834, 0, -16.905937)
 
 [node name="MobTimer" type="Timer" parent="." unique_id=677540174]
 wait_time = 0.5

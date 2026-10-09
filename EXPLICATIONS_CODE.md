@@ -341,17 +341,19 @@ func toggle_mute() -> void:
 
 ---
 
-## 9. Direction Artistique & Confinement de l'Arène
+## 9. Direction Artistique, Shader Mer & Confinement de l'Arène
 
-1. **Palette Cartoon / Pop (Fall Guys / Nintendo) :**
-   - Sol intérieur vert court de gazon propre (`Color(0.24, 0.72, 0.38)`).
-   - Ligne blanche d'arène sportive (`CourtBorder`).
-   - Sol extérieur bleu ciel rafraîchissant (`Color(0.25, 0.7, 0.88)`).
-   - Piliers d'angle jaunes chaleureux avec émission lumineuse.
+1. **Sol en Mer Cartoon Animée (`water.gdshader`) :**
+   - Le sol central utilise un shader procédural léger de 15 lignes sans aucune image externe.
+   - Les vagues se déplacent en temps réel grâce aux fonctions sinusoïdales et à la variable `TIME`.
+   - Mélange fluide entre deux bleus d'eau (bleu lagon et bleu profond) avec crêtes d'écume blanche (`smoothstep`).
+   - Faible rugosité (`ROUGHNESS = 0.12`) pour donner un reflet brillant et mouillé sous la lumière du soleil.
+   - Le sol extérieur et le ciel sont harmonisés en bleu océan.
+
 2. **Confinement du Joueur (`clampf`) :**
    Pour éviter que le joueur ne sorte de la vue de la caméra fixe :
    ```gdscript
-   position.x = clampf(position.x, min_x, max_x) # [-12.5, 12.5]
-   position.z = clampf(position.z, min_z, max_z) # [-13.0, 13.0]
+   position.x = clampf(position.x, min_x, max_x)
+   position.z = clampf(position.z, min_z, max_z)
    ```
    Le joueur glisse naturellement le long des bordures sans risquer de se perdre hors champ.
