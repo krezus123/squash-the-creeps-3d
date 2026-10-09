@@ -146,9 +146,6 @@ func start_frenzy(duration: float = 6.0) -> void:
 	is_frenzy_blink_visible = true
 	speed = frenzy_speed
 
-	if has_node("FrenzyParticles"):
-		$FrenzyParticles.emitting = true
-
 	var mesh_inst = get_node_or_null("Pivot/Character/Sphere_001")
 	if mesh_inst and golden_material:
 		mesh_inst.set_surface_override_material(1, golden_material)
@@ -163,9 +160,6 @@ func stop_frenzy() -> void:
 	is_frenzy = false
 	frenzy_timer = 0.0
 	speed = base_speed
-
-	if has_node("FrenzyParticles"):
-		$FrenzyParticles.emitting = false
 
 	var mesh_inst = get_node_or_null("Pivot/Character/Sphere_001")
 	if mesh_inst:

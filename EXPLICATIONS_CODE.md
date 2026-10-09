@@ -11,7 +11,7 @@ Ce document détaille l'intégralité des fonctionnalités ajoutées au jeu, com
 3. [Le Mode "Frenzy" (Étoile Invincible & Multiplicateur)](#3-le-mode-frenzy-étoile-invincible)
 4. [Variantes d'Ennemis (Monstres Bleus vs Sprinters Rouges)](#4-variantes-dennemis-monstres-bleus-vs-sprinters-rouges)
 5. [Améliorations Caméra : Cadrage Stable & Screen Shake](#5-améliorations-caméra--cadrage-stable--screen-shake)
-6. [Systèmes de Particules (CPUParticles3D)](#6-systèmes-de-particules-cpuparticles3d)
+6. [Clarté Visuelle & Élimination des Particules](#6-clarté-visuelle--élimination-des-particules)
 7. [Scores Flottants 3D (Combat Text)](#7-scores-flottants-3d-combat-text)
 8. [Bouton Audio Rapide (Mute Direct)](#8-bouton-audio-rapide-mute-direct)
 9. [Direction Artistique & Confinement de l'Arène](#9-direction-artistique--confinement-de-larène)
@@ -162,11 +162,8 @@ Inspiré du mode Super Star de Mario, le mode Frenzy transforme le joueur en for
 func start_frenzy(duration: float = 6.0) -> void:
     is_frenzy = true
     frenzy_timer = duration
-    speed = frenzy_speed # 23 m/s au lieu de 14
+    speed = frenzy_speed
 
-    $FrenzyParticles.emitting = true
-
-    # Remplacement du matériau du corps par de l'or brillant
     var mesh_inst = get_node_or_null("Pivot/Character/Sphere_001")
     if mesh_inst and golden_material:
         mesh_inst.set_surface_override_material(1, golden_material)
@@ -290,13 +287,11 @@ func _process(delta: float) -> void:
 
 ---
 
-## 6. Système de Particules (CPUParticles3D)
+## 6. Clarté Visuelle & Élimination des Particules
 
-L'émetteur de particules est concentré sur les moments forts :
+Afin de préserver une lisibilité maximale de l'action de jeu et un style graphique cartoon épuré, les émetteurs de particules superflus ont été retirés. 
 
-1. **L'aura Frenzy (`FrenzyParticles` dans `player.tscn`) :**
-   - Émission de particules sphériques dorées scintillantes (`Color(1, 0.9, 0.15)`) tout autour du joueur quand le mode invincible est actif.
-   - S'active uniquement lors de l'état invincible pour marquer la puissance du joueur sans encombrer la lisibilité du reste du jeu.
+Les retours de gameplay et le *Game Juice* reposent ainsi sur les animations réactives procédurales (Squash & Stretch, rebonds du chapeau, bannières 3D et shader aquatique), garantissant une netteté totale à l'écran sans occlusion visuelle.
 
 ---
 
