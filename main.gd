@@ -32,6 +32,7 @@ func trigger_screen_shake(amount: float = 0.35) -> void:
 
 func spawn_floating_score(points: int, pos: Vector3) -> void:
 	var label = Label3D.new()
+	label.font = preload("res://fonts/arial.ttf")
 	label.billboard = BaseMaterial3D.BILLBOARD_ENABLED
 	label.no_depth_test = true
 	label.outline_size = 12
